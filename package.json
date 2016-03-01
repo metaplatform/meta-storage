@@ -1,0 +1,32 @@
+{
+  "name": "meta-storage",
+  "version": "1.0.0",
+  "description": "META Storage server",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/jshint --exclude-path ./.gitignore --reporter=./node_modules/jshint-full-path/index.js .",
+    "pretest": "npm run-script lint",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --require should --reporter spec --ui bdd ./test/*",
+    "posttest": "./node_modules/.bin/istanbul check-coverage"
+  },
+  "keywords": [
+    "meta-storage",
+    "storage"
+  ],
+  "author": "META Platform team <www.meta-platform.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "istanbul": "^0.3.17",
+    "jshint": "^2.8.0",
+    "jshint-full-path": "^1.1.1",
+    "mocha": "^2.2.5",
+    "mock-fs": "^3.1.0",
+    "should": "^6.0.3"
+  },
+  "dependencies": {
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.13.4",
+    "meta-logger": "^1.0.3",
+    "mime": "^1.3.4"
+  }
+}

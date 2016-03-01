@@ -1,0 +1,58 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<title>Upload test</title>
+	<script src="bower_components/crypto-js/crypto-js.js"></script>
+	<script type="text/javascript">
+
+		var upload = function(ev){
+
+			var form = document.getElementById("form");
+			var data = new FormData(form);
+
+			var sessionId = document.getElementById("session").value;
+
+			var now = new Date();
+			var timestr = now.getFullYear() + ":" + now.getMonth() + ":" + now.getDate() + ":" + now.getHours();
+		
+			var token = CryptoJS.SHA256(sessionId + timestr);
+
+			var oReq = new XMLHttpRequest();
+			
+			oReq.addEventListener("load", function(){
+				console.log("Uploaded");
+			});
+			
+			oReq.open("POST", "http://localhost:8080/cube/storage/test?sessionid=" + sessionId + "&token=" + token);
+			oReq.send(data);
+
+			return false;
+
+		};
+
+	</script>
+</head>
+<body>
+
+	<form method="post" id="form" enctype="multipart/form-data" onsubmit="return upload()">
+
+		<p>
+			<input type="text" id="session" placeholder="Session ID" />
+		</p>
+
+		<p>
+			<input type="file" name="object[]">
+		</p>
+
+		<p>
+			<input type="file" name="object[]">
+		</p>
+
+		<p>
+			<input type="submit" value="Upload">
+		</p>
+
+	</form>
+
+</body>
+</html>

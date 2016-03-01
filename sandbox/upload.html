@@ -1,0 +1,57 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+	<title>Upload test</title>
+	<script src="bower_components/crypto-js/crypto-js.js"></script>
+	<script type="text/javascript">
+
+		var upload = function(ev){
+
+			var clientId = "test";
+			var secret = "test";
+
+			var now = new Date();
+			var timestr = now.getFullYear() + ":" + now.getMonth() + ":" + now.getDate() + ":" + now.getHours();
+		
+			var token = CryptoJS.SHA256(clientId + secret + timestr);
+
+			var form = document.getElementById("form");
+			var data = new FormData(form);
+
+			var oReq = new XMLHttpRequest();
+			
+			oReq.addEventListener("load", function(){
+				console.log("Uploaded");
+			});
+			
+			oReq.open("POST", "http://localhost:5020/test/write");
+			oReq.setRequestHeader("X-ClientId", clientId);
+			oReq.setRequestHeader("X-Token", token);
+			oReq.send(data);
+
+			return false;
+
+		};
+
+	</script>
+</head>
+<body>
+
+	<form method="post" id="form" enctype="multipart/form-data" onsubmit="return upload()">
+
+		<p>
+			<input type="file" name="object[]">
+		</p>
+
+		<p>
+			<input type="file" name="object[]">
+		</p>
+
+		<p>
+			<input type="submit" value="Upload">
+		</p>
+
+	</form>
+
+</body>
+</html>
